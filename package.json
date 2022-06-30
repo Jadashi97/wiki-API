@@ -4,5 +4,24 @@
     "ejs": "^3.1.8",
     "express": "^4.18.1",
     "mongoose": "^6.4.1"
-  }
+  },
+  "name": "wiki-api",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jadashi97/wiki-API.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jadashi97/wiki-API/issues"
+  },
+  "homepage": "https://github.com/Jadashi97/wiki-API#readme",
+  "description": ""
 }
