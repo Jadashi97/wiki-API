@@ -27,21 +27,25 @@ const articleSchema = {
 const Article = mongoose.model("Article", articleSchema); //this creates the article model using mongoose
 
 //GPPPD same as CRUD 
-//Create the GET route to enable to Read our articles from the database
-app.get("/articles", function(req, res){
 
+//Use mongoose method for the Chained route handlers to use a single app.route to target all the articles
+app.route("/articles")
+.get(function (req, res) {
+    // GET aka CREATE
+    //Create the GET route to enable to Read our articles from the database
     //using mongoose to find the documents in our db
-    Article.find({}, function(err, foundArticles){
-        if(!err){
+    Article.find({}, function (err, foundArticles) {
+        if (!err) {
             res.send(foundArticles);
-        }else{
+        } else {
             console.log(err);
         }
-    });
-});
+    })
+})
 
-
-app.post("/articles", function(req, res){
+.post(function(req, res){
+    // POST aka READ
+    //this creates our new articles thru the API and passes it thre the server and save it onto our database
     //Create a new object to add to the db
     const newArticle = new Article({
         //using body-parser to tap into the title and content of our articles
@@ -57,7 +61,21 @@ app.post("/articles", function(req, res){
             res.send(err);
         }
     });
+
 })
+
+.delete(function(req, res){
+    // DELETE
+    //The delete method for the deleting stuff from our database using Postman and our built API
+    Article.deleteMany(function(err){
+        if(!err){
+           res.send("Successfully deleted all the documents!! Voila!!!")
+        }else{
+            res.send(err)
+        }
+    });
+}); 
+
 
 //this is the route thru which the server runs 
 app.listen("3000",()=>{
