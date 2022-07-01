@@ -26,8 +26,9 @@ const articleSchema = {
 
 const Article = mongoose.model("Article", articleSchema); //this creates the article model using mongoose
 
-//GPPPD same as CRUD 
+////////////////////////////// REQUEST TARGETING ALL  ARTICLES ////////////////////////////////////////
 
+//GPPPD same as CRUD 
 //Use mongoose method for the Chained route handlers to use a single app.route to target all the articles
 app.route("/articles")
 .get(function (req, res) {
@@ -38,7 +39,7 @@ app.route("/articles")
         if (!err) {
             res.send(foundArticles);
         } else {
-            console.log(err);
+            res.send(err);
         }
     })
 })
@@ -76,9 +77,25 @@ app.route("/articles")
     });
 }); 
 
+////////////////////////////////////// REQUEST TARGETING A SPECIFIC ARTICLE ///////////////////////////////
+
+//use the chained method for a specific article
+app.route("/articles/:articleTitle")
+
+.get(function(req, res){
+
+    Article.findOne({title: req.params.articleTitle}, function(err, foundArticle){ //this uses the the route parameter needed to get the specific article
+        if(!err){
+            res.send(foundArticle)
+        }else{
+            res.send(" Opps!! did not find the specific article you were looking for!!")
+        }
+    });
+});
+
 
 //this is the route thru which the server runs 
-app.listen("3000",()=>{
+app.listen(3000,()=>{
 
     console.log("server is up and running!!!");
 
