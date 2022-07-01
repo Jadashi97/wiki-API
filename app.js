@@ -41,12 +41,25 @@ app.get("/articles", function(req, res){
 });
 
 
-app.post("articles", function(req, res){
-    console.log(req.body.title);
-    console.log(req.body.content);
+app.post("/articles", function(req, res){
+    //Create a new object to add to the db
+    const newArticle = new Article({
+        //using body-parser to tap into the title and content of our articles
+        title: req.body.title,
+        content:req.body.content
+    });
 
+    //this saves the new article to enter onto the db using  mongodb
+    newArticle.save(function(err){
+        if(!err){
+            res.send("Success on adding your new Article")
+        }else{
+            res.send(err);
+        }
+    });
 })
 
+//this is the route thru which the server runs 
 app.listen("3000",()=>{
 
     console.log("server is up and running!!!");
