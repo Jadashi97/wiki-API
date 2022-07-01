@@ -26,6 +26,26 @@ const articleSchema = {
 
 const Article = mongoose.model("Article", articleSchema); //this creates the article model using mongoose
 
+//GPPPD same as CRUD 
+//Create the GET route to enable to Read our articles from the database
+app.get("/articles", function(req, res){
+
+    //using mongoose to find the documents in our db
+    Article.find({}, function(err, foundArticles){
+        if(!err){
+            res.send(foundArticles);
+        }else{
+            console.log(err);
+        }
+    });
+});
+
+
+app.post("articles", function(req, res){
+    console.log(req.body.title);
+    console.log(req.body.content);
+
+})
 
 app.listen("3000",()=>{
 
