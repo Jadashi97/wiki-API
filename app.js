@@ -32,7 +32,7 @@ const Article = mongoose.model("Article", articleSchema); //this creates the art
 //Use mongoose method for the Chained route handlers to use a single app.route to target all the articles
 app.route("/articles")
 .get(function (req, res) {
-    // GET aka CREATE
+    // GET aka READ
     //Create the GET route to enable to Read our articles from the database
     //using mongoose to find the documents in our db
     Article.find({}, function (err, foundArticles) {
@@ -45,7 +45,7 @@ app.route("/articles")
 })
 
 .post(function(req, res){
-    // POST aka READ
+    // POST aka CREATE
     //this creates our new articles thru the API and passes it thre the server and save it onto our database
     //Create a new object to add to the db
     const newArticle = new Article({
@@ -82,8 +82,8 @@ app.route("/articles")
 //use the chained method for a specific article
 app.route("/articles/:articleTitle")
 
-.get(function(req, res){
-
+.get(function(req, res){ ////this is to get OR Read the the specific article needed
+    //use the 
     Article.findOne({title: req.params.articleTitle}, function(err, foundArticle){ //this uses the the route parameter needed to get the specific article
         if(!err){
             res.send(foundArticle)
@@ -91,8 +91,24 @@ app.route("/articles/:articleTitle")
             res.send(" Opps!! did not find the specific article you were looking for!!")
         }
     });
-});
+})
 
+.put(function(req, res){ //aka Update the a specific article
+
+    Article.updateOne( //use this update method from mongoDB
+        {title: req.params.articleTitle}, //this taps into the article title from postman
+        {title: req.body.title, content: req.body.content}, //this taps into the article content from postman
+        {overwrite: true},
+        //set up a callback function to handle for any errors
+        function(err){
+            if(!err){
+                res.send("Succesfully updated article")
+            }else{
+                res.send("Nahhhh something went wrong!!")
+            }
+        }
+    );      
+});
 
 //this is the route thru which the server runs 
 app.listen(3000,()=>{
