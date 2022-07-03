@@ -113,9 +113,36 @@ app.route("/articles/:articleTitle")
 .patch(function(req, res){ //also update method of a specific article but this changes only a specific part and not the entire code
 
     Article.updateOne(
+        {title: req.params.articleTitle}, //this taps into the that is set to be tested and passed from postman
+
+        {$set: req.body}, //this uses the set method from Mongodb to test what needs to be updated when patched from postman
         
-    )
+        //set up a callback function to handle for any errors
+        function(err){
+            if(!err){
+                res.send("Success  on patching it together")
+            }else{
+                res.send("you might need to check if something went wrong!!")
+            }
+        }
+    );
 })
+
+.delete(function(req, res){
+
+    Article.deleteOne(
+        {title: req.params.articleTitle}, //this taps into the specific article title that we want to delete
+        {_id: req.body.id},
+        //set a callback function to make sure 
+        function(err){
+            if(!err){
+                res.send("Succesfully deleted the specific article you wanted to delete")
+            }else{
+                res.send("C'mon what happened now, why are you still here!!!")
+            }
+        }
+    );
+});
 
 //this is the route thru which the server runs 
 app.listen(3000,()=>{
