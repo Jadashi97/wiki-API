@@ -93,12 +93,11 @@ app.route("/articles/:articleTitle")
     });
 })
 
-.put(function(req, res){ //aka Update the a specific article
+.put(function(req, res){ //aka Update the specific article & this replaces the entire article with a new one
 
     Article.updateOne( //use this update method from mongoDB
         {title: req.params.articleTitle}, //this taps into the article title from postman
         {title: req.body.title, content: req.body.content}, //this taps into the article content from postman
-        {overwrite: true},
         //set up a callback function to handle for any errors
         function(err){
             if(!err){
@@ -108,7 +107,15 @@ app.route("/articles/:articleTitle")
             }
         }
     );      
-});
+})
+
+
+.patch(function(req, res){ //also update method of a specific article but this changes only a specific part and not the entire code
+
+    Article.updateOne(
+        
+    )
+})
 
 //this is the route thru which the server runs 
 app.listen(3000,()=>{
