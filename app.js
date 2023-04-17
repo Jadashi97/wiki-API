@@ -2,7 +2,7 @@ const express = require("express"); //allows use of express s a dependency fom t
 
 const ejs = require("ejs"); //allows the use of ejs s a dependency fom the modules
 
-const bodyParser = require("body-Parser"); //allows use of body-Parser as a dependency fom the modules
+const bodyParser = require("body-parser"); //allows use of body-Parser as a dependency fom the modules
 
 const mongoose = require("mongoose"); //allows use of mongoose as a dependency fom the modules
 
